@@ -113,20 +113,20 @@ WHERE c.DepartmentID = 2;
 
 
 
-#3. To update the major of a specific student (e.g., StudentID = 101):
+# 3. To update the major of a specific student (e.g., StudentID = 101):
 
 UPDATE Students
 SET Major = 'Data Science'
 WHERE student_id = 101;
 
-#4. Retrieve a list of students along with the courses they are enrolled in.
+# 4. Retrieve a list of students along with the courses they are enrolled in.
 
 SELECT s.FirstName, s.LastName, c.CourseName
 FROM Students s
 JOIN Enrollments e ON s.student_id = e.StudentID
 JOIN Courses c ON e.CourseID = c.CourseID;
 
-#5. Get a list of all students and the courses they are enrolled in, including students who are not enrolled in any courses.
+# 5. Get a list of all students and the courses they are enrolled in, including students who are not enrolled in any courses.
 
 SELECT s.FirstName, s.LastName, c.CourseName
 FROM Students s
@@ -168,7 +168,7 @@ SELECT p.FirstName, p.LastName, d.DepartmentName
 FROM Professors p
 JOIN Departments d ON p.DepartmentID = d.DepartmentID;
 
-#10. Create a stored procedure that retrieves the list of students enrolled in a given course by CourseID.
+# 10. Create a stored procedure that retrieves the list of students enrolled in a given course by CourseID.
 DELIMITER //
 
 CREATE PROCEDURE GetStudentsByCourse(IN courseID INT)
@@ -187,24 +187,24 @@ SELECT CourseName, Credits
 FROM Courses
 ORDER BY Credits DESC;
 
-#12. Count the total number of students.
+# 12. Count the total number of students.
 
 SELECT COUNT(*) AS TotalStudents
 FROM Students;
 
- #13. Find the Average Credits per Course
+# 13. Find the Average Credits per Course
 Calculate the average number of credits for all courses.
 
 SELECT AVG(Credits) AS AverageCredits
 FROM Courses;
 
-#14. Find the Maximum and Minimum Credits of Courses
+# 14. Find the Maximum and Minimum Credits of Courses
 Get the maximum and minimum number of credits among courses.
 
 SELECT MAX(Credits) AS MaxCredits, MIN(Credits) AS MinCredits
 FROM Courses;
 
-#15. Count the number of professors in each department.
+# 15. Count the number of professors in each department.
 
 SELECT d.DepartmentName, COUNT(p.ProfessorID) AS NumberOfProfessors
 FROM Professors p
