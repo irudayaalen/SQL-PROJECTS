@@ -97,9 +97,116 @@ VALUES
 (108, 'Philosophy'),
 (109, 'Psychology');
 
-# 1 To find students enrolled in a specific course (e.g., CourseID = 101):
+# 1. To find students enrolled in a specific course (e.g., CourseID = 101):
 
 SELECT s.FirstName, s.LastName, e.EnrollmentDate
 FROM Students s
 JOIN Enrollments e ON s.student_id = e.StudentID
 WHERE e.CourseID = 101;
+
+# 2. To find courses offered by a specific department (e.g., DepartmentID = 2):
+
+SELECT c.CourseName, c.Credits
+FROM Courses c
+WHERE c.DepartmentID = 2;
+
+
+
+
+#3. To update the major of a specific student (e.g., StudentID = 101):
+
+UPDATE Students
+SET Major = 'Data Science'
+WHERE student_id = 101;
+
+#4. Retrieve a list of students along with the courses they are enrolled in.
+
+SELECT s.FirstName, s.LastName, c.CourseName
+FROM Students s
+JOIN Enrollments e ON s.student_id = e.StudentID
+JOIN Courses c ON e.CourseID = c.CourseID;
+
+#5. Get a list of all students and the courses they are enrolled in, including students who are not enrolled in any courses.
+
+SELECT s.FirstName, s.LastName, c.CourseName
+FROM Students s
+LEFT JOIN Enrollments e ON s.student_id = e.StudentID
+LEFT JOIN Courses c ON e.CourseID = c.CourseID;
+
+# 6. Get a list of all courses and the students enrolled in them, including courses that have no students enrolled.
+
+SELECT c.CourseName, s.FirstName, s.LastName
+FROM Courses c
+RIGHT JOIN Enrollments e ON c.CourseID = e.CourseID
+RIGHT JOIN Students s ON e.StudentID = s.student_id;
+
+# 7. Get a list of all students and all courses, including students not enrolled in any courses and courses with no students enrolled.
+
+SELECT s.FirstName, s.LastName, c.CourseName
+FROM Students s
+LEFT JOIN Enrollments e ON s.student_id = e.StudentID
+LEFT JOIN Courses c ON e.CourseID = c.CourseID
+UNION
+SELECT s.FirstName, s.LastName, c.CourseName
+FROM Courses c
+LEFT JOIN Enrollments e ON c.CourseID = e.CourseID
+LEFT JOIN Students s ON e.StudentID = s.student_id;
+
+# 8. Combining Courses and Departments
+SELECT CourseName AS Name, 'Course' AS Type
+FROM Courses
+
+UNION
+
+SELECT DepartmentName AS Name, 'Department' AS Type
+FROM Departments;
+
+# 9. Create a view that displays each professor's name and their department name.
+
+CREATE VIEW ProfessorDepartments AS
+SELECT p.FirstName, p.LastName, d.DepartmentName
+FROM Professors p
+JOIN Departments d ON p.DepartmentID = d.DepartmentID;
+
+#10. Create a stored procedure that retrieves the list of students enrolled in a given course by CourseID.
+DELIMITER //
+
+CREATE PROCEDURE GetStudentsByCourse(IN courseID INT)
+BEGIN
+    SELECT s.FirstName, s.LastName
+    FROM Students s
+    JOIN Enrollments e ON s.student_id = e.StudentID
+    WHERE e.CourseID = courseID;
+END //
+
+DELIMITER ;
+
+# 11. Retrieve a list of courses sorted by the number of credits in descending order.
+
+SELECT CourseName, Credits
+FROM Courses
+ORDER BY Credits DESC;
+
+#12. Count the total number of students.
+
+SELECT COUNT(*) AS TotalStudents
+FROM Students;
+
+ #13. Find the Average Credits per Course
+Calculate the average number of credits for all courses.
+
+SELECT AVG(Credits) AS AverageCredits
+FROM Courses;
+
+#14. Find the Maximum and Minimum Credits of Courses
+Get the maximum and minimum number of credits among courses.
+
+SELECT MAX(Credits) AS MaxCredits, MIN(Credits) AS MinCredits
+FROM Courses;
+
+#15. Count the number of professors in each department.
+
+SELECT d.DepartmentName, COUNT(p.ProfessorID) AS NumberOfProfessors
+FROM Professors p
+JOIN Departments d ON p.DepartmentID = d.DepartmentID
+GROUP BY d.DepartmentName;
