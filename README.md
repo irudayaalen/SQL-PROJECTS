@@ -192,14 +192,12 @@ ORDER BY Credits DESC;
 SELECT COUNT(*) AS TotalStudents
 FROM Students;
 
-# 13. Find the Average Credits per Course
-Calculate the average number of credits for all courses.
+# 13. Calculate the average number of credits for all courses.
 
 SELECT AVG(Credits) AS AverageCredits
 FROM Courses;
 
-# 14. Find the Maximum and Minimum Credits of Courses
-Get the maximum and minimum number of credits among courses.
+# 14. Get the maximum and minimum number of credits among courses.
 
 SELECT MAX(Credits) AS MaxCredits, MIN(Credits) AS MinCredits
 FROM Courses;
