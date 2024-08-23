@@ -1,2 +1,2 @@
 # SQL-PROJECTS
-# SQL-PROJECTS
+# College Database Managemnt System
