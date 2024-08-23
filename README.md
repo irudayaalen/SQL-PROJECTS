@@ -96,3 +96,10 @@ VALUES
 (107, 'Economics'),
 (108, 'Philosophy'),
 (109, 'Psychology');
+
+# 1 To find students enrolled in a specific course (e.g., CourseID = 101):
+
+SELECT s.FirstName, s.LastName, e.EnrollmentDate
+FROM Students s
+JOIN Enrollments e ON s.student_id = e.StudentID
+WHERE e.CourseID = 101;
